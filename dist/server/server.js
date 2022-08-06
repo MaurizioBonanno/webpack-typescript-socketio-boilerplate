@@ -46,6 +46,9 @@ class App {
                 }
                 this.io.emit('random', randomNumber);
             }, 1000);
+            socket.on('message', (msg) => {
+                console.log(msg);
+            });
             //quando il socket si disocnnette
             socket.on('disconnect', () => {
                 console.log('utente disconnesso ' + socket.id);
