@@ -8,7 +8,12 @@ export class SocketClient{
 
         this.socket.on('message',(msg: any)=>{
             console.log(msg);
-            document.body.innerHTML = msg;
+            document.body.innerHTML = msg+'<br>';
+        })
+
+        this.socket.on('random',(number: any)=>{
+            
+            document.body.innerHTML+='<div>il numero estratto a caso è '+number+'</div><hr>';
         })
     }
 }
