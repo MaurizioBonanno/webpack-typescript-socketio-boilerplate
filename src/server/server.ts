@@ -22,6 +22,14 @@ class App {
 
         this.io.on('connection', (socket: socketIO.Socket) => {
             console.log('a user connected : ' + socket.id)
+
+            //emit 
+            socket.emit('message' , 'Ciao Utente:'+socket.id);
+
+            //quando il socket si disocnnette
+            socket.on('disconnect',()=>{
+                console.log('utente disconnesso '+socket.id);
+            });
         })
     }
 

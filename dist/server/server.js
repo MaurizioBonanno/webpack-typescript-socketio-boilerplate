@@ -17,6 +17,12 @@ class App {
         this.io = new socket_io_1.default.Server(this.server);
         this.io.on('connection', (socket) => {
             console.log('a user connected : ' + socket.id);
+            //emit 
+            socket.emit('message', 'Ciao Utente:' + socket.id);
+            //quando il socket si disocnnette
+            socket.on('disconnect', () => {
+                console.log('utente disconnesso ' + socket.id);
+            });
         });
     }
     Start() {

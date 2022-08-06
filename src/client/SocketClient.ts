@@ -5,5 +5,10 @@ export class SocketClient{
 
     constructor(){
         this.socket = io();
+
+        this.socket.on('message',(msg: any)=>{
+            console.log(msg);
+            document.body.innerHTML = msg;
+        })
     }
 }
