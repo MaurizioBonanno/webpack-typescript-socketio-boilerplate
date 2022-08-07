@@ -8,6 +8,7 @@ const path_1 = __importDefault(require("path"));
 const http_1 = __importDefault(require("http"));
 const socket_io_1 = __importDefault(require("socket.io"));
 const LuckyNumberGame_1 = __importDefault(require("./LuckyNumberGame"));
+const randomScreenNameGenerator_1 = __importDefault(require("./randomScreenNameGenerator"));
 const port = 3000;
 class App {
     constructor(port) {
@@ -20,11 +21,20 @@ class App {
         this.io = new socket_io_1.default.Server(this.server);
         //istanzio game
         this.game = new LuckyNumberGame_1.default();
+        //istanzio randomScreenGenerator
+        this.randomScreenGenerator = new randomScreenNameGenerator_1.default();
         this.io.on('connection', (socket) => {
             console.log('a user connected : ' + socket.id);
+            let screenName = this.randomScreenGenerator.generateRandomScreenName();
+            socket.emit('screenName', screenName);
+            console.log('ho inviato screenName:' + screenName.name);
             //quando il socket si disocnnette
             socket.on('disconnect', () => {
                 console.log('utente disconnesso ' + socket.id);
+            });
+            //evento chatMessage
+            socket.on('chatMessage', (chatMessage) => {
+                socket.broadcast.emit('chatMessage', chatMessage);
             });
         });
     }
